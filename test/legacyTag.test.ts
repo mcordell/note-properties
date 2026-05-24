@@ -77,6 +77,26 @@ describe("legacyTag", () => {
     });
   });
 
+  describe("interaction with hideEmptyProperties", () => {
+    it("empty tags array is excluded from properties when hideEmptyProperties is true", () => {
+      const noteProps = getNoteProperties("tags: []", {
+        includeAll: true,
+        hideEmptyProperties: true,
+        legacyTag: "always",
+      });
+      expect("tags" in noteProps.properties).toBe(false);
+    });
+
+    it("non-empty tags array is kept when hideEmptyProperties is true", () => {
+      const noteProps = getNoteProperties('tags:\n  - foo', {
+        includeAll: true,
+        hideEmptyProperties: true,
+        legacyTag: "always",
+      });
+      expect(noteProps.properties["tags"]).toEqual(["foo"]);
+    });
+  });
+
   describe('"only" mode — single-property condition', () => {
     // The component triggers legacy rendering when legacyTag === "only" AND
     // entries.length === 1 AND "tags" is in properties. These tests verify
