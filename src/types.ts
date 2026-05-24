@@ -30,6 +30,12 @@ export interface NotePropertiesOptions {
   excludedProperties: string[];
   /** Hide the visual properties panel while still processing frontmatter and resolving links. */
   hidePropertiesView: boolean;
+  /**
+   * "always" — always render tags as a legacy .tags list instead of the properties panel.
+   * "only"   — use legacy rendering when tags is the only non-empty visible property.
+   * "never"  — always use the standard properties panel (default).
+   */
+  legacyTag: "always" | "only" | "never";
   /** Frontmatter delimiters. Defaults to "---". */
   delimiters: string | [string, string];
   /** Frontmatter language. Defaults to "yaml". */

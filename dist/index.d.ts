@@ -11,6 +11,7 @@ declare module "vfile" {
         noteProperties: {
             properties: Record<string, unknown>;
             hideView: boolean;
+            legacyTag: "always" | "only" | "never";
             showProperties?: boolean;
             collapseProperties?: boolean;
             resolvedLinks?: Record<string, string>;
