@@ -171,6 +171,23 @@ function renderTagList(tags: string[], ctx: RenderCtx): preact.JSX.Element {
   return <span class="note-properties-tags">{items}</span>;
 }
 
+function renderLegacyTagList(tags: string[], ctx: RenderCtx): preact.JSX.Element {
+  return (
+    <ul class="tags">
+      {tags.map((tag) => {
+        const href = resolveRelative(ctx.slug, `tags/${tag}`);
+        return (
+          <li>
+            <a href={href} class="internal tag-link">
+              {tag}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export default ((opts?: NotePropertiesComponentOptions) => {
   const { collapsed = false } = opts ?? {};
 
@@ -179,6 +196,7 @@ export default ((opts?: NotePropertiesComponentOptions) => {
       | {
           properties: Record<string, unknown>;
           hideView: boolean;
+          legacyTag: "always" | "only" | "never";
           showProperties?: boolean;
           collapseProperties?: boolean;
           resolvedLinks?: Record<string, string>;
@@ -201,6 +219,20 @@ export default ((opts?: NotePropertiesComponentOptions) => {
       slug: (props.fileData?.slug as string) ?? "",
       resolvedLinks: noteProps.resolvedLinks ?? {},
     };
+
+    const tags = Array.isArray(properties.tags) && (properties.tags as string[]).length > 0
+      ? (properties.tags as string[])
+      : null;
+
+    const legacyTag = noteProps.legacyTag ?? "never";
+    const useLegacy =
+      tags !== null &&
+      (legacyTag === "always" ||
+        (legacyTag === "only" && entries.length === 1 && "tags" in properties));
+
+    if (useLegacy) {
+      return renderLegacyTagList(tags!, ctx);
+    }
 
     // Per-note collapse override takes precedence over component option
     const isCollapsed = noteProps.collapseProperties ?? collapsed;

@@ -32,6 +32,12 @@ export interface NotePropertiesOptions {
   hidePropertiesView: boolean;
   /** Omit properties whose value is null, undefined, empty string, or empty array. */
   hideEmptyProperties: boolean;
+  /**
+   * "always" — always render tags as a legacy .tags list instead of the properties panel.
+   * "only"   — use legacy rendering when tags is the only non-empty visible property.
+   * "never"  — always use the standard properties panel (default).
+   */
+  legacyTag: "always" | "only" | "never";
   /** Frontmatter delimiters. Defaults to "---". */
   delimiters: string | [string, string];
   /** Frontmatter language. Defaults to "yaml". */

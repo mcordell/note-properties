@@ -150,6 +150,15 @@
           "toml"
         ],
         "description": "Frontmatter language"
+      },
+      "legacyTags": {
+        "type": "enum",
+        "values": [
+          "always",
+          "only",
+          "never"
+        ],
+        "description": "When to use legacy (v4) tag rendering rather than properties panel. always - always use tag list rather than properties panel, only - use legacy rendering when tags is the only non-empty visible property, never - always render panel"
       }
     },
     "components": {

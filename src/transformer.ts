@@ -20,6 +20,7 @@ const defaultOptions: NotePropertiesOptions = {
   excludedProperties: [],
   hidePropertiesView: false,
   hideEmptyProperties: false,
+  legacyTag: "never",
   delimiters: "---",
   language: "yaml",
 };
@@ -250,6 +251,7 @@ export const NoteProperties: QuartzTransformerPlugin<Partial<NotePropertiesOptio
             file.data.noteProperties = {
               properties: visibleProps,
               hideView: opts.hidePropertiesView,
+              legacyTag: opts.legacyTag,
               showProperties,
               collapseProperties,
             };
@@ -300,6 +302,7 @@ declare module "vfile" {
     noteProperties: {
       properties: Record<string, unknown>;
       hideView: boolean;
+      legacyTag: "always" | "only" | "never";
       showProperties?: boolean;
       collapseProperties?: boolean;
       resolvedLinks?: Record<string, string>;
